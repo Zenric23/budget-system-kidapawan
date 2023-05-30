@@ -44,11 +44,13 @@ router.post('/login', async (req, res)=> {
         .cookie("token", token, {
             maxAge: 1000 * 18000,
             httpOnly: true,
-            sameSite: "strict"
+            sameSite: "strict",
+            domain: "budget-system.netlify.app"
         })
         .cookie("isLogin", true, {
             maxAge: 1000 * 18000,
-            sameSite: "strict"
+            sameSite: "strict",
+            domain: "budget-system.netlify.app"
         })
         .status(200).json(others)
 
