@@ -12,7 +12,7 @@ router.post('/register', async (req, res)=> {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(user.pass, salt)
-
+ 
         const newUser =  new User({
             email: user.email,
             pass: hashedPass
@@ -44,15 +44,15 @@ router.post('/login', async (req, res)=> {
         .cookie("token", token, {
             maxAge: 1000 * 18000,
             httpOnly: true,
-            // sameSite: "strict",
+            sameSite: "strict",
             // domain: "budget-system.netlify.app"
         })
         .cookie("isLogin", true, {
             maxAge: 1000 * 18000,
-            // sameSite: "strict",
+            sameSite: "strict",
             // domain: "budget-system.netlify.app"
         })
-        .status(200).json(others)
+        .status(200).json({userDetails: others, token})
 
     } catch (error) {
         console.log(error)

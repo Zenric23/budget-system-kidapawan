@@ -3,7 +3,10 @@ const jwt = require('jsonwebtoken')
 
 
 const verifyToken = (req, res, next) => {
-    const token = req.cookies['token']
+    const auth = req.headers['authorization']
+    const token = auth.split(' ')[1]
+    // const token = req.cookies['token']
+
     if(!token) return res.status(401).json('You are not authenticated.')
 
     jwt.verify(token, process.env.JWT_KEY, (err, user)=> {
@@ -15,7 +18,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAuth = (req, res, next) => {
     verifyToken(req, res, ()=> {
-        if(req.user._id === req.params.id) {
+        if(req.user._id === req.params.id) { 
             next()
         } else 
         res.status(401).json('You are not allowed to do that.')
